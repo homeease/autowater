@@ -2,7 +2,7 @@
 #include "SunSensor.hpp"
 
 const static float MIN_SOIL_MOISTURE = 30.00;
-const static float MIN_SUN_SENSOR = 30.00;
+const static float MIN_SUN_SENSOR_DARKNESS = 60.00;
 
 SoilMoisture soil_moisture(A0);
 SunSensor sun_sensor(A1);
@@ -31,7 +31,7 @@ bool sun_sensor_vote(void)
   Serial.print("[INFO] main SunSensor: ");
   Serial.print(v);
   Serial.println("%");
-  return v < MIN_SUN_SENSOR;
+  return v < MIN_SUN_SENSOR_DARKNESS;
 }
 bool need_to_water(void)
 {
@@ -55,6 +55,6 @@ void loop() {
   {
     water();
   }
-  delay(5000);
+  delay(1000);
 
 }

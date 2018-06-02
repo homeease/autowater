@@ -10,8 +10,8 @@ extern "C" {
 class SunSensor : public AnalogSensor
 {
   public:
-    const static long FROM_LOW = 344; // Lowest analog value
-    const static long FROM_MAX = 310; // Highest analog value
+    const static long FROM_LOW = 35; // Lowest analog value
+    const static long FROM_MAX = 860; // Highest analog value
     const static long TO_MIN = 0; // Lowest float value
     const static long TO_MAX = 100; // Highest float value
 
