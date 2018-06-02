@@ -1,5 +1,5 @@
-#include <SoilMoisture.hpp>
-#include <SunSensor.hpp>
+#include "SoilMoisture.hpp"
+#include "SunSensor.hpp"
 
 const static float MIN_SOIL_MOISTURE = 30.00;
 const static float MIN_SUN_SENSOR = 30.00;
