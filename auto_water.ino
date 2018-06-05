@@ -1,17 +1,26 @@
 #include "SoilMoisture.hpp"
 #include "SunSensor.hpp"
+#include <Servo.h>
 
 const static float MIN_SOIL_MOISTURE = 30.00;
 const static float MIN_SUN_SENSOR_DARKNESS = 60.00;
+const static uint8_t SERVO_PIN = 2;
+const static uint16_t SERVO_START_POS = 0;
+const static uint16_t SERVO_CLOSE_POS = SERVO_START_POS;
+const static uint16_t SERVO_OPEN_POS = 90;
+const static uint16_t WATERING_CHECK_INTERVAL = 1000; // ms
 
 SoilMoisture soil_moisture(A0);
 SunSensor sun_sensor(A1);
+Servo myservo;
+bool watering = false;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+  myservo.attach(SERVO_PIN);
+  myservo.write(SERVO_CLOSE_POS);
   delay(2000);
-  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 bool soil_moisture_vote(void)
@@ -41,20 +50,32 @@ bool need_to_water(void)
   return stat;
 }
 
-void water(void)
+void start_watering(void)
 {
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);                       // wait for a second
+  myservo.write(SERVO_OPEN_POS);
+}
+
+void stop_watering(void)
+{
+  myservo.write(SERVO_CLOSE_POS);
 }
 
 void loop() {
-  // if need to water then water otherwise do nothing
-  if(need_to_water())
-  {
-    water();
-  }
-  delay(1000);
+  bool stat = need_to_water();
 
+  // if need to water then water otherwise
+  // only stop watering if we were watering
+  // and we no longer need to water
+  if(!watering && stat)
+  {
+    start_watering();
+    watering = true;
+  }
+  else if(watering && !stat)
+  {
+    stop_watering();
+    watering = false;
+  }
+
+  delay(WATERING_CHECK_INTERVAL);
 }
