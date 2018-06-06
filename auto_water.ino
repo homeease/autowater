@@ -5,9 +5,9 @@
 const static float MIN_SOIL_MOISTURE = 30.00;
 const static float MIN_SUN_SENSOR_DARKNESS = 60.00;
 const static uint8_t SERVO_PIN = 2;
-const static uint16_t SERVO_START_POS = 0;
+const static uint16_t SERVO_START_POS = 90;
 const static uint16_t SERVO_CLOSE_POS = SERVO_START_POS;
-const static uint16_t SERVO_OPEN_POS = 90;
+const static uint16_t SERVO_OPEN_POS = 0;
 const static uint16_t WATERING_CHECK_INTERVAL = 1000; // ms
 
 SoilMoisture soil_moisture(A0);
@@ -40,7 +40,7 @@ bool sun_sensor_vote(void)
   Serial.print("[INFO] main SunSensor: ");
   Serial.print(v);
   Serial.println("%");
-  return v < MIN_SUN_SENSOR_DARKNESS;
+  return v > MIN_SUN_SENSOR_DARKNESS;
 }
 bool need_to_water(void)
 {
