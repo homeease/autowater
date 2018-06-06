@@ -4,7 +4,7 @@
 
 const static float MIN_SOIL_MOISTURE = 30.00;
 const static float MIN_SUN_SENSOR_DARKNESS = 60.00;
-const static uint8_t SERVO_PIN = 2;
+const static uint8_t SERVO_PIN = 9;
 const static uint16_t SERVO_START_POS = 90;
 const static uint16_t SERVO_CLOSE_POS = SERVO_START_POS;
 const static uint16_t SERVO_OPEN_POS = 0;
